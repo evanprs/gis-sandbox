@@ -2,6 +2,8 @@ import json
 import subprocess
 import os
 import glob
+from pathlib import Path
+
 
 import wget
 from pyproj import Transformer
@@ -29,6 +31,9 @@ def transform_bbox(bbox):
 
 
 def download_dems(bounding_box):
+    data_dir = Path("./source_dems/")
+    data_dir.mkdir(exist_ok=True)
+
     opr_dataset = "Original%20Product%20Resolution%20(OPR)%20Digital%20Elevation%20Model%20(DEM)"
     dem_1m_dataset = "Digital%20Elevation%20Model%20(DEM)%201%20meter"
     for dataset in [opr_dataset, dem_1m_dataset]:
@@ -56,11 +61,11 @@ def download_dems(bounding_box):
     filenames = []
     # download results
     for result in results:
-        if os.path.isfile(result[1].split('/')[-1]): #check if already downloaded
-            filename = result[1].split('/')[-1]
-        else:
-            filename = wget.download(result[1])
-        filenames.append(filename)
+        url = result[1]
+        filepath = data_dir.joinpath(url.split('/')[-1])
+        if not filepath.exists(): #check if already downloaded
+            wget.download(url, out=str(filepath))
+        filenames.append(str(filepath))
 
     return filenames
 
