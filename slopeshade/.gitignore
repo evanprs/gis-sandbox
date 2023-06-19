@@ -1,0 +1,5 @@
+*.tif
+*.tiff
+
+#autogen by script
+col.txt
