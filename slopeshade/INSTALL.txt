@@ -1,0 +1,10 @@
+This tool requires GDAL to function. If you already have QGIS installed, you can access GDAL via `qgis-process`, but this will run slower than GDAL alone. On Windows, I found the easiest stragetgy to be installing via OSGeo4W. After that, create a virtual environment from OsGEO's python binary:
+
+`virtualenv -p <OSGeo4W directory>\bin\python.exe venv`
+
+Then activate the virtual environment and install the python requirements:
+
+`pip install requirements.txt`
+
+On Mac, I gave up on installing GDAL and simply installed QGIS, then pointed to the GDAL binaries packaged with the application. To do this, just change the QGIS_BIN_PATH global to point to the bin directory inside QGIS.app.
+
