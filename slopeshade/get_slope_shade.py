@@ -199,7 +199,13 @@ def get_slope_raster(bounding_box, outfilename="out.tif", delete_intermediates=T
 
 if __name__ == "__main__":
     import sys
-    coords = list(map(float, sys.argv[1].split(',')))
+    if len(sys.argv) > 1:
+        coords = list(map(float, sys.argv[1].split(',')))
+    else:
+        coord1 = input("Enter first bounding box coodinate: ")
+        coord2 = input("Enter second bounding box coordinate: ")
+        coords = list(map(float, (coord1 + ',' + coord2).split(',')))
     assert len(coords) == 4
     bbox = pasted_to_bbox( *coords)
+    print(bbox)
     get_slope_raster(bbox, delete_intermediates=True, arg_method="GDAL_PYTHON")
